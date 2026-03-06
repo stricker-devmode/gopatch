@@ -1,0 +1,44 @@
+{
+    "id": "host1.example.com",
+    "description": "a test server",
+    "dependencies": [
+        "host2.exmaple.com",
+        "host3.example.com"
+    ],
+    "connection": {
+        "socket": "host1.exmaple.com:22",
+        "useproxy": true,
+        "proxyuri": "http://proxy.example.com:3128"
+    },
+    "authentication": {
+        "user": "root",
+        "password": "my_totally_secure_root(key)_password_do_not_steal",
+        "sshkey": "~/.ssh/keys/host1.example.com.id_rsa"
+    },
+    "virtualisation": {
+        "type": "vsphere",
+        "host": "vsphere.vmware.example.com",
+        "username": "jtest-admin",
+        "password": "harder,daddy_broadcom!",
+        "snapshotnametemplate": "{{ DateTime.IsoDate }}_gopatch_{{ .Virtualisation.Username }}",
+        "snapshotdesctemplate": "Automated snapshot made by gopatch {{ Globals.Version }} for {{ .Virtualisation.Username }}",
+        "id": "host1"
+    },
+    "action": {
+        "chain": "{{ Chains.PatchdayNormal }}",
+        "commands": [
+            {
+                "cmd": "echo \"this is debug output!!\""
+            },
+            {
+                "cmd": "systemctl stop mariadb.service",
+                "onsuccess": "echo \"successfully stopped mariadb service\"; {{ Action.SnapshotCreate }}",
+                "onfailure": "echo Aborting...; {{ Action.Abort }}"
+            },
+            {
+                "cmd": "dnf -y update",
+                "onsuccess": "echo -e \"Updates successfully installed!\nTriggering reboot.\"; shutdown -r +2"
+            }
+        ]
+    }
+}
