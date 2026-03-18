@@ -1,0 +1,22 @@
+connectionsMax: 25
+connectionsMaxProxy: 13
+directoryChains: "~/.config/gopatch/chains"
+directoryLogs: "~/.config/gopatch/logs/{{ DateTime.IsoDate }}"
+defaultProfile:
+  connection:
+    useProxy: false
+    proxyUri: "http://proxy.example.com:3128"
+  authentication:
+    user: "root"
+    password: "my_totally_secure_root(key)_password_do_not_steal"
+    sshKey: "~/.ssh/keys/host1.example.com.id_rsa"
+  virtualisation:
+    virtual: false
+    type: "vsphere"
+    host: "vsphere.vmware.example.com"
+    username: "jtest-admin"
+    password: "harder,daddy_broadcom!"
+    snapshotNameTemplate: "{{ DateTime.IsoDate }}_gopatch_{{ .Virtualisation.Username }}"
+    snapshotDescTemplate: "Automated snapshot made by gopatch {{ Globals.Version }} for {{ .Virtualisation.Username }}"
+  action:
+    chain: "{{ Chains.PatchdayNormal }}"

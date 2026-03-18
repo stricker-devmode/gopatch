@@ -5,19 +5,20 @@ dependencies:
   - "host3.example.com"
 connection:
   socket: "host1.example.com:22"
-  useproxy: true
-  proxyuri: "http://proxy.example.com:3128"
+  useProxy: true
+  proxyUri: "http://proxy.example.com:3128"
 authentication:
   user: "root"
   password: "my_totally_secure_root(key)_password_do_not_steal"
-  sshkey: "~/.ssh/keys/host1.example.com.id_rsa"
+  sshKey: "~/.ssh/keys/host1.example.com.id_rsa"
 virtualisation:
+  virtual: false
   type: "vsphere"
   host: "vsphere.vmware.example.com"
   username: "jtest-admin"
   password: "harder,daddy_broadcom!"
-  snapshotnametemplate: "{{ DateTime.IsoDate }}_gopatch_{{ .Virtualisation.Username }}"
-  snapshotdesctemplate: "Automated snapshot made by gopatch {{ Globals.Version }} for {{ .Virtualisation.Username }}"
+  snapshotNameTemplate: "{{ DateTime.IsoDate }}_gopatch_{{ .Virtualisation.Username }}"
+  snapshotDescTemplate: "Automated snapshot made by gopatch {{ Globals.Version }} for {{ .Virtualisation.Username }}"
   id: "host1"
 action:
   chain: "{{ Chains.PatchdayNormal }}"
