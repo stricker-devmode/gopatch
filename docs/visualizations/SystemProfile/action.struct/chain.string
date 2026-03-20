@@ -1,0 +1,1 @@
+which action chain to load (overrides commands array is present) (optional, at least one of `chain` or `commands` required)

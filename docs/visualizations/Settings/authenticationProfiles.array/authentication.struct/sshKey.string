@@ -1,0 +1,1 @@
+path to ssh key for authentication (optional, at least one of `password` or `sshKey` required)
