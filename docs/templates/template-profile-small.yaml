@@ -1,0 +1,15 @@
+# Small and reasonable example
+# This is likely what most of your profiles will look like
+id: "host1.example.com"
+description: "an example server"
+dependencies:
+  - "host2.example.com"
+  - "host3.example.com"
+connectionSocket: "host1.example.com:22"
+loadProxy: "example-proxy1"
+loadAuthentication: "example-auth"
+loadVirtualization: "example-virt"
+virtualisation:
+  id: "host1"
+action:
+  chain: "{{ Chains.Example }}"
