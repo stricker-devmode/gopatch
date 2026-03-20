@@ -1,22 +1,35 @@
-connectionsMax: 25
-connectionsMaxProxy: 13
-directoryChains: "~/.config/gopatch/chains"
-directoryLogs: "~/.config/gopatch/logs/{{ DateTime.IsoDate }}"
-defaultProfile:
-  connection:
-    useProxy: false
+# Settings example
+# While the order doesn't truly matter I would recommend you keep the profile arrays
+# towards the end of the file as they tend to grow over time.
+connections:
+  max: 25  # Maximum number of total active connections
+  maxProxy: 13  # Maximum number of active connections per proxy
+directories:
+  chains: "~/.config/gopatch/chains"  # Path to your chains directory
+  logs: "~/.config/gopatch/logs/{{ DateTime.IsoDate }}"  # Path to your logs directory. This can be modified at runtime with templating!
+formats:
+  logfileName: "{{ DateTime.IsoDateTime }}_{{ .Id }}.log"  # Templating for your logfile names
+defaultSystemProfile:  # The default system profile. This is the base for every other profile.
+  loadAuthentication: "example-auth"
+  action:
+    chain: "{{ Chains.Example }}"
+# Loadable blocks of configuration so you can spare yourself some typing when creating system profiles!
+# Address these blocks by their profileId value
+authenticationProfiles:
+  - profileId: "example-auth"  # Address by this string
+    username: "root"  # to get this in your profile
+    password: "my_totally_secure_root(key)_password_do_not_steal"  # to get this in your profile
+    sshKey: "~/.ssh/keys/host1.example.com.id_rsa"  # to get this in your profile
+proxyProfiles:
+  - profileId: "example-proxy1"
     proxyUri: "http://proxy.example.com:3128"
-  authentication:
-    user: "root"
-    password: "my_totally_secure_root(key)_password_do_not_steal"
-    sshKey: "~/.ssh/keys/host1.example.com.id_rsa"
-  virtualisation:
-    virtual: false
+  - profileId: "example-proxy2"
+    proxyUri: "http://anotherproxy.example.com:3128"
+virtualizationProfiles:
+  - profileId: "example-virt"
     type: "vsphere"
     host: "vsphere.vmware.example.com"
-    username: "jtest-admin"
+    username: "exmaple-admin"
     password: "harder,daddy_broadcom!"
     snapshotNameTemplate: "{{ DateTime.IsoDate }}_gopatch_{{ .Virtualisation.Username }}"
     snapshotDescTemplate: "Automated snapshot made by gopatch {{ Globals.Version }} for {{ .Virtualisation.Username }}"
-  action:
-    chain: "{{ Chains.PatchdayNormal }}"

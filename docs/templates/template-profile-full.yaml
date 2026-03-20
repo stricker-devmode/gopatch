@@ -1,27 +1,29 @@
+# Full server profile example
+# Mostly for reference, if your production profiles look like this you are either not taking
+# advantage of inheritance and templating or your environment is truly awful and I am very
+# very sorry for you
 id: "host1.example.com"
-description: "a test server"
+description: "an example server"
 dependencies:
   - "host2.example.com"
   - "host3.example.com"
-connection:
-  socket: "host1.example.com:22"
-  useProxy: true
+connectionSocket: "host1.example.com:22"
+proxy:
   proxyUri: "http://proxy.example.com:3128"
 authentication:
-  user: "root"
+  username: "root"
   password: "my_totally_secure_root(key)_password_do_not_steal"
   sshKey: "~/.ssh/keys/host1.example.com.id_rsa"
 virtualisation:
-  virtual: false
+  id: "host1"
   type: "vsphere"
   host: "vsphere.vmware.example.com"
-  username: "jtest-admin"
+  username: "example-admin"
   password: "harder,daddy_broadcom!"
   snapshotNameTemplate: "{{ DateTime.IsoDate }}_gopatch_{{ .Virtualisation.Username }}"
   snapshotDescTemplate: "Automated snapshot made by gopatch {{ Globals.Version }} for {{ .Virtualisation.Username }}"
-  id: "host1"
 action:
-  chain: "{{ Chains.PatchdayNormal }}"
+  chain: "{{ Chains.Example }}"
   commands:
     - cmd: "echo \"this is debug output!!\""
     - cmd: "systemctl stop mariadb.service"

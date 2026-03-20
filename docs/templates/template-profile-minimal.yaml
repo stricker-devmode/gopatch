@@ -1,12 +1,7 @@
+# Minimal example
+# actions & authentication are inherited from the default profile
+# no proxy connection or virtualization support
+# truly minimal
 id: "host1.example.com"
-description: "a test server"
-dependencies:
-  - "host2.example.com"
-  - "host3.example.com"
-connection:
-  socket: "host1.example.com:22"
-  useProxy: true
-virtualisation:
-  virtual: true
-  type: "vsphere"
-  id: "host1"
+description: "an example server" # Technically you can still remove this line but it will look weird
+connectionSocket: "host1.example.com:22"
